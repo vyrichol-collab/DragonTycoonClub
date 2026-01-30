@@ -34,14 +34,12 @@
             width: 100%;
         }
 
-        /* Общие стили для всех строк */
         .console-line {
             font-size: 13px;
             color: var(--text-desc);
             font-weight: 400;
             display: inline-block;
             vertical-align: bottom;
-            /* Пока печатается — строго в одну строку */
             white-space: nowrap; 
             overflow: hidden;
             border-right: 7px solid var(--text-main);
@@ -52,7 +50,6 @@
             animation: blink-caret .9s step-end infinite;
         }
 
-        /* Когда строка готова, разрешаем перенос только если она реально длинная */
         .done {
             border-right: none;
             width: auto !important;
@@ -60,7 +57,6 @@
             display: block;
         }
 
-        /* Специальный контейнер для ввода */
         .prompt-wrapper {
             display: flex;
             align-items: flex-start;
@@ -143,7 +139,6 @@
 
             const val = hiddenInput.value;
             
-            // Запрет на не-английский ввод
             if (/[^a-zA-Z0-9\s?!.,'"]/.test(val)) {
                 display.style.borderRight = "none";
                 display.id = "";
@@ -157,7 +152,6 @@
 
             const lowerVal = val.toLowerCase();
             display.textContent = lowerVal;
-            // Динамически расширяем ширину под текст
             display.style.width = (lowerVal.length + 1) + "ch";
         });
 
@@ -170,7 +164,7 @@
                     display.id = "";
                     display.classList.remove('animating');
                     display.style.borderRight = "none";
-                    display.parentElement.classList.add('done'); // Фиксируем обертку
+                    display.parentElement.classList.add('done');
                 }
                 
                 hiddenInput.value = "";
@@ -200,8 +194,8 @@
             showPrompt();
         }
 
-        window.onload = start;
-        document.body.onclick = () => hiddenInput.focus();
+            window.onload = start;
+            document.body.onclick = () => hiddenInput.focus();
     </script>
 </body>
 </html>
