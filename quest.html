@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DRAGON TYCOON CLUB // TRIAL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>DRAGON TYCOON CLUB // QUEST</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #000000;
             --text-main: #ffffff;
-            --text-dim: #555555;
-            --border: #1a1a1a;
+            --text-desc: #bbbbbb;
+            --text-error: #ff00c1;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -19,47 +19,189 @@
             background: var(--bg);
             color: var(--text-main);
             font-family: 'Space Mono', monospace;
+            line-height: 1.5;
+            min-height: 100vh;
+            width: 100vw;
+            padding: 40px; 
+            overflow-x: hidden;
+            cursor: text;
+        }
+
+        .terminal-container {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            flex-direction: column;
+            gap: 5px;
+            width: 100%;
+        }
+
+        /* Общие стили для всех строк */
+        .console-line {
+            font-size: 13px;
+            color: var(--text-desc);
+            font-weight: 400;
+            display: inline-block;
+            vertical-align: bottom;
+            /* Пока печатается — строго в одну строку */
+            white-space: nowrap; 
+            overflow: hidden;
+            border-right: 7px solid var(--text-main);
+            width: 0;
+        }
+
+        .animating {
+            animation: blink-caret .9s step-end infinite;
+        }
+
+        /* Когда строка готова, разрешаем перенос только если она реально длинная */
+        .done {
+            border-right: none;
+            width: auto !important;
+            white-space: pre-wrap; 
+            display: block;
+        }
+
+        /* Специальный контейнер для ввода */
+        .prompt-wrapper {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: row;
+            white-space: nowrap;
+        }
+
+        .prompt-label {
+            font-size: 13px;
+            color: var(--text-main);
+            flex-shrink: 0;
+        }
+
+        .input-display {
+            font-size: 13px;
+            color: var(--text-main);
+            border-right: 7px solid var(--text-main);
+            min-width: 1ch;
+            white-space: nowrap;
             overflow: hidden;
         }
 
-        /* Тот же фон для консистентности */
-        .jp-bg-layer {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            display: flex;
-            justify-content: space-between;
-            padding: 5% 3%;
-            font-family: 'Noto Sans JP', sans-serif;
-            font-size: 7vh;
-            color: rgba(255, 255, 255, 0.12);
-            writing-mode: vertical-rl;
-            text-transform: uppercase;
+        .error-msg { color: var(--text-error); }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--text-main); }
         }
 
-        .quest-title {
-            font-size: 3rem;
-            letter-spacing: 15px;
-            text-transform: uppercase;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 20px 40px;
+        #hidden-input {
+            position: fixed;
+            opacity: 0;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="jp-bg-layer">
-        <div>龍の覇道</div>
-        <div>絶対的な成長</div>
-    </div>
+    <div class="terminal-container" id="terminal"></div>
+    <input type="text" id="hidden-input" autocomplete="off" spellcheck="false">
 
-    <h1 class="quest-title">QUEST</h1>
+    <script>
+        const terminal = document.getElementById('terminal');
+        const hiddenInput = document.getElementById('hidden-input');
+        const charSpeed = 30; 
 
+        async function typeText(text, isError = false) {
+            const line = document.createElement('div');
+            line.className = 'console-line animating';
+            if (isError) line.classList.add('error-msg');
+            terminal.appendChild(line);
+
+            for (let i = 0; i <= text.length; i++) {
+                line.textContent = text.substring(0, i);
+                line.style.width = i + "ch";
+                await new Promise(res => setTimeout(res, charSpeed));
+            }
+
+            line.classList.remove('animating');
+            line.classList.add('done');
+            window.scrollTo(0, document.body.scrollHeight);
+            return line;
+        }
+
+        function showPrompt() {
+            const promptWrapper = document.createElement('div');
+            promptWrapper.className = 'prompt-wrapper';
+            promptWrapper.innerHTML = `
+                <span class="prompt-label">> enter command:&nbsp;</span>
+                <span id="current-input" class="input-display animating"></span>
+            `;
+            terminal.appendChild(promptWrapper);
+            hiddenInput.value = "";
+            hiddenInput.focus();
+        }
+
+        hiddenInput.addEventListener('input', async () => {
+            const display = document.getElementById('current-input');
+            if (!display) return;
+
+            const val = hiddenInput.value;
+            
+            // Запрет на не-английский ввод
+            if (/[^a-zA-Z0-9\s?!.,'"]/.test(val)) {
+                display.style.borderRight = "none";
+                display.id = "";
+                hiddenInput.value = "";
+                
+                await new Promise(res => setTimeout(res, 200));
+                await typeText('error: invalid language detected. use english only.', true);
+                showPrompt();
+                return;
+            }
+
+            const lowerVal = val.toLowerCase();
+            display.textContent = lowerVal;
+            // Динамически расширяем ширину под текст
+            display.style.width = (lowerVal.length + 1) + "ch";
+        });
+
+        hiddenInput.addEventListener('keydown', async (e) => {
+            if (e.key === 'Enter') {
+                const cmd = hiddenInput.value.toLowerCase().trim();
+                const display = document.getElementById('current-input');
+                
+                if (display) {
+                    display.id = "";
+                    display.classList.remove('animating');
+                    display.style.borderRight = "none";
+                    display.parentElement.classList.add('done'); // Фиксируем обертку
+                }
+                
+                hiddenInput.value = "";
+
+                if (cmd === 'yes') {
+                    await new Promise(res => setTimeout(res, 300));
+                    await typeText('system: credentials verified.');
+                    await typeText('welcome to the circuit.');
+                } else if (cmd === 'no') {
+                    await new Promise(res => setTimeout(res, 300));
+                    await typeText('system: return when you are ready.');
+                    setTimeout(() => location.href = 'index.html', 2000);
+                } else if (cmd !== "") {
+                    await typeText('error: command "' + cmd + '" not recognized.', true);
+                    showPrompt();
+                } else {
+                    showPrompt();
+                }
+            }
+        });
+
+        async function start() {
+            await typeText('did you fall into the "hole"?');
+            await new Promise(res => setTimeout(res, 600));
+            await typeText('initializing system...');
+            await typeText('establishing secure connection...');
+            showPrompt();
+        }
+
+        window.onload = start;
+        document.body.onclick = () => hiddenInput.focus();
+    </script>
 </body>
 </html>
