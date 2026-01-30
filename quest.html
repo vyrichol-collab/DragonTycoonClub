@@ -23,6 +23,8 @@
             min-height: 100vh;
             width: 100vw;
             padding: 40px; 
+            /* Добавили плавный скролл и скрыли горизонтальную полосу */
+            scroll-behavior: smooth;
             overflow-x: hidden;
             cursor: text;
         }
@@ -32,6 +34,8 @@
             flex-direction: column;
             gap: 5px;
             width: 100%;
+            /* Чтобы контент не обрезался снизу */
+            padding-bottom: 100px; 
         }
 
         .console-line {
@@ -103,6 +107,10 @@
         const hiddenInput = document.getElementById('hidden-input');
         const charSpeed = 30; 
 
+        function scrollToBottom() {
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
         async function typeText(text, isError = false) {
             const line = document.createElement('div');
             line.className = 'console-line animating';
@@ -112,12 +120,13 @@
             for (let i = 0; i <= text.length; i++) {
                 line.textContent = text.substring(0, i);
                 line.style.width = i + "ch";
+                scrollToBottom(); 
                 await new Promise(res => setTimeout(res, charSpeed));
             }
 
             line.classList.remove('animating');
             line.classList.add('done');
-            window.scrollTo(0, document.body.scrollHeight);
+            scrollToBottom();
             return line;
         }
 
@@ -131,6 +140,7 @@
             terminal.appendChild(promptWrapper);
             hiddenInput.value = "";
             hiddenInput.focus();
+            scrollToBottom();
         }
 
         hiddenInput.addEventListener('input', async () => {
@@ -153,6 +163,7 @@
             const lowerVal = val.toLowerCase();
             display.textContent = lowerVal;
             display.style.width = (lowerVal.length + 1) + "ch";
+            scrollToBottom();
         });
 
         hiddenInput.addEventListener('keydown', async (e) => {
@@ -176,7 +187,7 @@
                 } else if (cmd === 'no') {
                     await new Promise(res => setTimeout(res, 300));
                     await typeText('system: return when you are ready.');
-                    setTimeout(() => location.href = 'index.html', 2000);
+                    setTimeout(() => location.reload(), 2000); 
                 } else if (cmd !== "") {
                     await typeText('error: command "' + cmd + '" not recognized.', true);
                     showPrompt();
@@ -194,8 +205,8 @@
             showPrompt();
         }
 
-            window.onload = start;
-            document.body.onclick = () => hiddenInput.focus();
+        window.onload = start;
+        document.body.onclick = () => hiddenInput.focus();
     </script>
 </body>
 </html>
