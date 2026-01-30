@@ -27,7 +27,6 @@
             justify-content: center;
         }
 
-        /* Иероглифы всегда на месте */
         .jp-bg-layer {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -54,27 +53,28 @@
 
         .header-wrapper { margin-bottom: 50px; }
         
-        /* Заголовок с секретной ссылкой */
         .title {
             font-size: 1.6rem;
             letter-spacing: 5px;
             text-transform: uppercase;
             position: relative;
             display: inline-block;
+            z-index: 2;
         }
 
         .secret-link {
             color: inherit;
             text-decoration: none;
-            cursor: default; /* Курсор не меняется на указатель */
+            cursor: default;
         }
 
+        /* Глитч без перекрытия иероглифов */
         .title::before, .title::after {
             content: "DRAGON TYCOON CLUB";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg);
-            pointer-events: none; /* Глитч не мешает клику */
+            background: transparent; /* Изменено на прозрачный */
+            pointer-events: none;
         }
 
         .title::before {
@@ -100,7 +100,11 @@
             100% { clip: rect(25px, 999px, 30px, 0); }
         }
 
-        .section { margin-bottom: 50px; } 
+        .section { 
+            margin-bottom: 50px; 
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 50px;
+        } 
 
         .section-label {
             font-size: 9px;
@@ -112,9 +116,7 @@
         }
 
         .card {
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 30px 0; 
+            padding: 10px 0; 
         }
 
         .card-jp {
@@ -161,8 +163,7 @@
             font-size: 9px;
             color: #ffffff;
             letter-spacing: 6px;
-            border-top: 1px solid #1a1a1a;
-            padding-top: 30px;
+            padding-bottom: 30px;
         }
 
         .ticker-wrap {
@@ -170,7 +171,7 @@
             overflow: hidden;
             border-top: 1px solid var(--border);
             padding: 25px 0;
-            margin-top: 60px;
+            margin-top: 20px;
             background: #000;
         }
 
