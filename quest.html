@@ -14,12 +14,14 @@
             --text-error: #ff0055;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         html, body {
             background: var(--bg);
-            height: 100vh;
+            min-height: 100%;
             overflow-x: hidden;
+            /* Убираем прыжки при появлении клавиатуры */
+            height: -webkit-fill-available;
         }
 
         body {
@@ -27,14 +29,13 @@
             font-family: 'Space Mono', monospace;
             font-size: 13px;
             line-height: 1.5;
-            padding: 20px; 
+            padding: 20px 20px 100px 20px; /* Большой отступ снизу чтобы текст не прятался за клавиатурой */
             display: flex;
             flex-direction: column;
         }
 
         .terminal-container {
             width: 100%;
-            padding-bottom: 50px; /* Запас для скролла */
         }
 
         .line {
@@ -56,7 +57,6 @@
             animation: blink 0.9s step-end infinite;
             padding-left: 4px;
             color: var(--text-main);
-            min-height: 1em;
         }
 
         @keyframes blink {
@@ -82,9 +82,11 @@
         }
 
         #hidden-field {
-            position: absolute;
+            position: fixed; /* Чтобы не влиял на скролл */
             opacity: 0;
-            left: -9999px;
+            top: 0;
+            left: 0;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -99,11 +101,12 @@
         const charSpeed = 20;
         let isWaitingForInput = false;
 
-        function scrollToBottom() {
-            const lastLine = terminal.lastElementChild;
-            if (lastLine) {
-                lastLine.scrollIntoView({ behavior: 'smooth', block: 'end' });
-            }
+        function forceScroll() {
+            // Самый жесткий и надежный скролл для мобильного Chrome
+            window.scrollTo({
+                top: document.documentElement.scrollHeight,
+                behavior: 'smooth'
+            });
         }
 
         async function print(text, type = 'default') {
@@ -114,10 +117,11 @@
 
             for (let i = 0; i <= text.length; i++) {
                 el.textContent = text.substring(0, i);
-                if (i % 3 === 0) scrollToBottom();
+                // Скроллим реже, чтобы не нагружать процессор
+                if (i % 5 === 0) forceScroll();
                 await new Promise(r => setTimeout(r, charSpeed));
             }
-            scrollToBottom();
+            forceScroll();
             return el;
         }
 
@@ -128,7 +132,7 @@
             
             for (let i = 0; i < 3; i++) {
                 el.textContent = 'loading' + '.'.repeat(i + 1);
-                scrollToBottom();
+                forceScroll();
                 await new Promise(r => setTimeout(r, 400));
             }
             terminal.removeChild(el);
@@ -143,13 +147,21 @@
             isWaitingForInput = true;
             inputField.value = "";
             inputField.focus();
-            scrollToBottom();
+            setTimeout(forceScroll, 100);
         }
 
         inputField.addEventListener('input', () => {
             if (!isWaitingForInput) return;
             const cursor = document.getElementById('cursor');
             if (cursor) cursor.textContent = inputField.value.toLowerCase();
+            forceScroll();
+        });
+
+        // Фокусируемся при любом клике, но не даем странице прыгать
+        document.addEventListener('touchstart', (e) => {
+            if (e.target.tagName !== 'BUTTON') {
+                inputField.focus();
+            }
         });
 
         inputField.addEventListener('keydown', async (e) => {
@@ -193,7 +205,7 @@
                     btn.textContent = 'CONTINUE';
                     btn.onclick = () => window.location.href = 'gate.html';
                     terminal.appendChild(btn);
-                    scrollToBottom();
+                    setTimeout(forceScroll, 100);
                 } 
                 else {
                     if (cmd !== "") await print('error: access denied', 'error');
@@ -210,7 +222,6 @@
         }
 
         window.onload = init;
-        document.addEventListener('click', () => inputField.focus());
     </script>
 </body>
 </html>
