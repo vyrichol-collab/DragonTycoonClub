@@ -191,9 +191,7 @@
                     await typeText('system: credentials verified.');
                     await typeText('welcome to the circuit.');
                     await new Promise(res => setTimeout(res, 800));
-                    
                     await loadingAnimation(2);
-                    
                     await typeText('alert: critical data corruption detected.');
                     await new Promise(res => setTimeout(res, 400));
                     await typeText('source: absolute_growth_module.bin');
@@ -206,15 +204,26 @@
                     await typeText('status: GROWTH PROTOCOL ACTIVATED.');
                     await new Promise(res => setTimeout(res, 600));
                     await typeText('welcome to the evolution, creator.');
-                    
-                    // Тут можно добавить финальный шаг завтра
+                    await new Promise(res => setTimeout(res, 800));
+                    await typeText('system: final core access is locked by prophecy.');
+                    await new Promise(res => setTimeout(res, 400));
+                    await typeText('the gate will only open when three dragons descend upon the earth.');
+                    showPrompt();
+
+                } else if (cmd === '1104') {
+                    await typeText('prophecy confirmed. the stars have aligned.');
+                    await loadingAnimation(1);
+                    await typeText('accessing the dragon tycoon club archives...');
+                    await new Promise(res => setTimeout(res, 600));
+                    await typeText('status: online. welcome home.');
 
                 } else if (cmd === 'no') {
                     await new Promise(res => setTimeout(res, 300));
                     await typeText('system: return when you are ready.');
                     setTimeout(() => { window.location.href = './'; }, 1500); 
+
                 } else if (cmd !== "") {
-                    await typeText('error: command "' + cmd + '" not recognized.', true);
+                    await typeText('look to the eastern sunrise. their power is measured in three claws, and their day is written in the stars.', true);
                     showPrompt();
                 } else {
                     showPrompt();
