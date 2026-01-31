@@ -87,7 +87,6 @@
 
         .error-msg { color: var(--text-error); }
 
-        /* Стили для кнопки */
         .continue-btn {
             background: transparent;
             color: var(--text-main);
@@ -261,7 +260,7 @@
                     setTimeout(() => { window.location.href = './'; }, 1500); 
 
                 } else if (cmd !== "") {
-                    await typeText('look to the eastern sunrise. their power is measured in three claws, and their day is written in the stars.', true);
+                    await typeText('error: access denied. invalid command or key.', true);
                     showPrompt();
                 } else {
                     showPrompt();
@@ -281,4 +280,5 @@
         document.body.onclick = () => hiddenInput.focus();
     </script>
 </body>
+</html>
 </html>
