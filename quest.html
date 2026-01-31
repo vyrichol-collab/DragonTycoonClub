@@ -34,6 +34,7 @@
 
         .terminal-container {
             width: 100%;
+            padding-bottom: 50px; /* Запас для скролла */
         }
 
         .line {
@@ -65,7 +66,7 @@
 
         .success { color: var(--text-success); }
         .error { color: var(--text-error); }
-        .bright { color: var(--text-main); font-weight: 700; }
+        .bright { color: var(--text-main); font-weight: 700; text-transform: uppercase; }
 
         .continue-btn {
             background: transparent;
@@ -77,6 +78,7 @@
             margin-top: 20px;
             width: fit-content;
             display: block;
+            text-transform: uppercase;
         }
 
         #hidden-field {
@@ -97,6 +99,13 @@
         const charSpeed = 20;
         let isWaitingForInput = false;
 
+        function scrollToBottom() {
+            const lastLine = terminal.lastElementChild;
+            if (lastLine) {
+                lastLine.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
+        }
+
         async function print(text, type = 'default') {
             const el = document.createElement('div');
             el.className = 'line';
@@ -105,16 +114,21 @@
 
             for (let i = 0; i <= text.length; i++) {
                 el.textContent = text.substring(0, i);
+                if (i % 3 === 0) scrollToBottom();
                 await new Promise(r => setTimeout(r, charSpeed));
             }
-            window.scrollTo(0, document.body.scrollHeight);
+            scrollToBottom();
             return el;
         }
 
         async function loading() {
-            const el = await print('loading...', 'success');
+            const el = document.createElement('div');
+            el.className = 'line success';
+            terminal.appendChild(el);
+            
             for (let i = 0; i < 3; i++) {
                 el.textContent = 'loading' + '.'.repeat(i + 1);
+                scrollToBottom();
                 await new Promise(r => setTimeout(r, 400));
             }
             terminal.removeChild(el);
@@ -129,7 +143,7 @@
             isWaitingForInput = true;
             inputField.value = "";
             inputField.focus();
-            window.scrollTo(0, document.body.scrollHeight);
+            scrollToBottom();
         }
 
         inputField.addEventListener('input', () => {
@@ -145,43 +159,44 @@
                 
                 isWaitingForInput = false;
                 if (cursor) {
-                    cursor.id = ""; // Убираем ID, чтобы старый курсор не мигал
+                    cursor.id = "";
                     cursor.classList.remove('active-input');
                     cursor.style.borderRight = "none";
                 }
 
                 if (cmd === 'yes') {
-                    await print('system: credentials verified.', 'success');
-                    await print('welcome to the circuit.', 'bright');
+                    await print('system: credentials verified', 'success');
+                    await print('welcome to the circuit', 'bright');
                     await loading();
-                    await print('alert: critical data corruption detected.', 'error');
+                    await print('alert: critical data corruption detected', 'error');
                     await print('source: absolute_growth_module.bin');
-                    await print('restoration requires semantic key.');
+                    await print('restoration requires semantic key');
                     createPrompt();
                 } 
                 else if (cmd === 'absolute growth') {
-                    await print('key accepted. reassembling data fragments...', 'success');
+                    await print('key accepted. reassembling data fragments', 'success');
                     await loading();
-                    await print('status: GROWTH PROTOCOL ACTIVATED.', 'success');
-                    await print('welcome to the evolution.', 'bright');
-                    await print('system: final core access is restricted by a temporal marker.');
-                    await print('the gate will only open when three dragons descend upon the earth.');
+                    await print('status: GROWTH PROTOCOL ACTIVATED', 'success');
+                    await print('welcome to the evolution', 'bright');
+                    await print('system: final core access is restricted by a temporal marker');
+                    await print('the gate will only open when three dragons descend upon the earth');
                     createPrompt();
                 } 
                 else if (cmd === '1104') {
-                    await print('temporal marker detected. system sync complete.', 'success');
+                    await print('temporal marker detected. system sync complete', 'success');
                     await loading();
-                    await print('establishing connection to the core...');
-                    await print('status: online.', 'success');
-                    await print('welcome to the dragon tycoon club.', 'bright');
+                    await print('establishing connection to the core');
+                    await print('status: online', 'success');
+                    await print('welcome to the dragon tycoon club', 'bright');
                     const btn = document.createElement('button');
                     btn.className = 'continue-btn';
                     btn.textContent = 'CONTINUE';
                     btn.onclick = () => window.location.href = 'gate.html';
                     terminal.appendChild(btn);
+                    scrollToBottom();
                 } 
                 else {
-                    if (cmd !== "") await print('error: access denied.', 'error');
+                    if (cmd !== "") await print('error: access denied', 'error');
                     createPrompt();
                 }
             }
@@ -189,8 +204,8 @@
 
         async function init() {
             await print('did you fall into the "hole"?');
-            await print('initializing system...');
-            await print('establishing secure connection...');
+            await print('initializing system...', 'success');
+            await print('establishing secure connection...', 'success');
             createPrompt();
         }
 
