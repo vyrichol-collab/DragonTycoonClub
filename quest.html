@@ -19,7 +19,8 @@
         html, body {
             background: var(--bg);
             height: 100%;
-            overflow: hidden; /* Скролл будет внутри контейнера */
+            overflow: hidden;
+            background-color: #000;
         }
 
         body {
@@ -34,7 +35,7 @@
         #terminal-content {
             flex: 1;
             overflow-y: auto;
-            padding: 20px 20px 150px 20px;
+            padding: 20px 20px 180px 20px;
             -webkit-overflow-scrolling: touch;
         }
 
@@ -75,7 +76,7 @@
             padding: 12px 24px;
             font-family: 'Space Mono', monospace;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 25px;
             width: fit-content;
             display: block;
             text-transform: uppercase;
@@ -141,14 +142,14 @@
             
             isWaitingForInput = true;
             inputField.value = "";
-            
-            // Программный фокус для мобилок
             inputField.focus();
             setTimeout(scrollToEnd, 50);
         }
 
-        document.addEventListener('click', () => {
-            if (isWaitingForInput) inputField.focus();
+        document.addEventListener('click', (e) => {
+            if (isWaitingForInput && e.target.tagName !== 'BUTTON') {
+                inputField.focus();
+            }
         });
 
         inputField.addEventListener('input', () => {
@@ -175,7 +176,7 @@
                     await print('welcome to the circuit', 'bright');
                     await loading();
                     await print('alert: critical data corruption detected', 'error');
-                    await print('source: encrypted_growth_sector.raw'); // Изменили, чтобы не палить пароль
+                    await print('source: encrypted_growth_sector.raw'); 
                     await print('restoration requires semantic key');
                     createPrompt();
                 } 
@@ -193,7 +194,7 @@
                     await loading();
                     await print('establishing connection to the core');
                     await print('status: online', 'success');
-                    await print('welcome to the dragon tycoon club', 'bright');
+                    // Убрали строку WELCOME DRAGON TYCOON CLUB
                     const btn = document.createElement('button');
                     btn.className = 'continue-btn';
                     btn.textContent = 'CONTINUE';
