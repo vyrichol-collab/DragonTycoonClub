@@ -18,10 +18,8 @@
         
         html, body {
             background: var(--bg);
-            min-height: 100%;
-            overflow-x: hidden;
-            /* Убираем прыжки при появлении клавиатуры */
-            height: -webkit-fill-available;
+            height: 100%;
+            overflow: hidden; /* Скролл будет внутри контейнера */
         }
 
         body {
@@ -29,13 +27,15 @@
             font-family: 'Space Mono', monospace;
             font-size: 13px;
             line-height: 1.5;
-            padding: 20px 20px 100px 20px; /* Большой отступ снизу чтобы текст не прятался за клавиатурой */
             display: flex;
             flex-direction: column;
         }
 
-        .terminal-container {
-            width: 100%;
+        #terminal-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 20px 150px 20px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .line {
@@ -82,86 +82,80 @@
         }
 
         #hidden-field {
-            position: fixed; /* Чтобы не влиял на скролл */
+            position: absolute;
+            width: 1px;
+            height: 1px;
             opacity: 0;
-            top: 0;
-            left: 0;
-            pointer-events: none;
+            border: none;
+            left: -999px;
         }
     </style>
 </head>
 <body>
 
-    <div id="terminal" class="terminal-container"></div>
-    <input type="text" id="hidden-field" autocomplete="off" spellcheck="false">
+    <div id="terminal-content"></div>
+    <input type="text" id="hidden-field" autocomplete="off" spellcheck="false" inputmode="text">
 
     <script>
-        const terminal = document.getElementById('terminal');
+        const container = document.getElementById('terminal-content');
         const inputField = document.getElementById('hidden-field');
         const charSpeed = 20;
         let isWaitingForInput = false;
 
-        function forceScroll() {
-            // Самый жесткий и надежный скролл для мобильного Chrome
-            window.scrollTo({
-                top: document.documentElement.scrollHeight,
-                behavior: 'smooth'
-            });
+        function scrollToEnd() {
+            container.scrollTop = container.scrollHeight;
         }
 
         async function print(text, type = 'default') {
             const el = document.createElement('div');
             el.className = 'line';
             if (type !== 'default') el.classList.add(type);
-            terminal.appendChild(el);
+            container.appendChild(el);
 
             for (let i = 0; i <= text.length; i++) {
                 el.textContent = text.substring(0, i);
-                // Скроллим реже, чтобы не нагружать процессор
-                if (i % 5 === 0) forceScroll();
+                if (i % 3 === 0) scrollToEnd();
                 await new Promise(r => setTimeout(r, charSpeed));
             }
-            forceScroll();
+            scrollToEnd();
             return el;
         }
 
         async function loading() {
             const el = document.createElement('div');
             el.className = 'line success';
-            terminal.appendChild(el);
-            
+            container.appendChild(el);
             for (let i = 0; i < 3; i++) {
                 el.textContent = 'loading' + '.'.repeat(i + 1);
-                forceScroll();
+                scrollToEnd();
                 await new Promise(r => setTimeout(r, 400));
             }
-            terminal.removeChild(el);
+            container.removeChild(el);
         }
 
         function createPrompt() {
             const wrapper = document.createElement('div');
             wrapper.className = 'prompt-line';
             wrapper.innerHTML = `> enter command: <span id="cursor" class="active-input"></span>`;
-            terminal.appendChild(wrapper);
+            container.appendChild(wrapper);
             
             isWaitingForInput = true;
             inputField.value = "";
+            
+            // Программный фокус для мобилок
             inputField.focus();
-            setTimeout(forceScroll, 100);
+            setTimeout(scrollToEnd, 50);
         }
+
+        document.addEventListener('click', () => {
+            if (isWaitingForInput) inputField.focus();
+        });
 
         inputField.addEventListener('input', () => {
             if (!isWaitingForInput) return;
             const cursor = document.getElementById('cursor');
             if (cursor) cursor.textContent = inputField.value.toLowerCase();
-            forceScroll();
-        });
-
-        // Фокусируемся при любом клике, но не даем странице прыгать
-        document.addEventListener('touchstart', (e) => {
-            if (e.target.tagName !== 'BUTTON') {
-                inputField.focus();
-            }
+            scrollToEnd();
         });
 
         inputField.addEventListener('keydown', async (e) => {
@@ -181,7 +175,7 @@
                     await print('welcome to the circuit', 'bright');
                     await loading();
                     await print('alert: critical data corruption detected', 'error');
-                    await print('source: absolute_growth_module.bin');
+                    await print('source: encrypted_growth_sector.raw'); // Изменили, чтобы не палить пароль
                     await print('restoration requires semantic key');
                     createPrompt();
                 } 
@@ -204,8 +198,8 @@
                     btn.className = 'continue-btn';
                     btn.textContent = 'CONTINUE';
                     btn.onclick = () => window.location.href = 'gate.html';
-                    terminal.appendChild(btn);
-                    setTimeout(forceScroll, 100);
+                    container.appendChild(btn);
+                    scrollToEnd();
                 } 
                 else {
                     if (cmd !== "") await print('error: access denied', 'error');
