@@ -29,6 +29,7 @@
             display: flex;
             justify-content: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .grid-background {
@@ -90,10 +91,14 @@
         .container { 
             max-width: 800px; 
             width: 100%;
-            padding: 60px 25px 0; 
+            padding: 60px 0 0; 
             text-align: center;
             position: relative;
             z-index: 1;
+        }
+
+        .content-padding {
+            padding: 0 25px;
         }
 
         .header-wrapper { margin-bottom: 50px; }
@@ -211,11 +216,15 @@
         }
 
         .ticker-wrap {
-            width: 100%;
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
             overflow: hidden;
             border-top: 1px solid var(--border);
             padding: 25px 0;
-            margin-top: 20px;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
         }
@@ -255,112 +264,114 @@
     </div>
 
     <div class="container">
-        <header class="header-wrapper">
-            <h1 class="title">
-                <a href="quest.html" class="secret-link">DRAGON</a> TYCOON CLUB
-            </h1>
-        </header>
+        <div class="content-padding">
+            <header class="header-wrapper">
+                <h1 class="title">
+                    <a href="quest.html" class="secret-link">DRAGON</a> TYCOON CLUB
+                </h1>
+            </header>
 
-        <section class="section">
-            <span class="section-label">[ 01 // OVERVIEW ]</span>
-            <div class="card">
-                <span class="card-jp">核心 // PROJECT_CORE</span>
-                <h2>Private Network for Builders</h2>
-                <p>A closed-loop ecosystem designed for launching and scaling projects within a unified infrastructure.</p>
-                <p>Not a public chat. Not an open community. A controlled environment where execution outweighs discussion.</p>
-                <p>The philosophy is simple: most early-stage projects fail not from a lack of ideas, but from a lack of structure, support, and the right circle. We exist to bridge that gap.</p>
-            </div>
-        </section>
-
-        <section class="section">
-            <span class="section-label">[ 02 // ANALYSIS ]</span>
-            <div class="card">
-                <span class="card-jp">欠陥 // THE_PROBLEM</span>
-                <h2>Founding in Isolation</h2>
-                <p>Most founders start alone, facing a critical deficit of:</p>
-                <div class="list-group">
-                    <span class="list-item">INITIAL AUDIENCE ACCESS</span>
-                    <span class="list-item">VETTED TEAM MEMBERS</span>
-                    <span class="list-item">HIGH-SIGNAL FEEDBACK</span>
-                    <span class="list-item">EARLY-STAGE CAPITAL</span>
-                    <span class="list-item">FOCUSED ENVIRONMENT</span>
+            <section class="section">
+                <span class="section-label">[ 01 // OVERVIEW ]</span>
+                <div class="card">
+                    <span class="card-jp">核心 // PROJECT_CORE</span>
+                    <h2>Private Network for Builders</h2>
+                    <p>A closed-loop ecosystem designed for launching and scaling projects within a unified infrastructure.</p>
+                    <p>Not a public chat. Not an open community. A controlled environment where execution outweighs discussion.</p>
+                    <p>The philosophy is simple: most early-stage projects fail not from a lack of ideas, but from a lack of structure, support, and the right circle. We exist to bridge that gap.</p>
                 </div>
-                <p>Public communities create noise. Open platforms dilute focus. Finding reliable partners takes months. Impulse is lost before the product even breathes.</p>
-            </div>
-        </section>
+            </section>
 
-        <section class="section">
-            <span class="section-label">[ 03 // INFRASTRUCTURE ]</span>
-            <div class="card">
-                <span class="card-jp">解決 // THE_SOLUTION</span>
-                <h2>Private Forge for Creators</h2>
-                <p>The Club acts as a private utility layer. Inside the ecosystem, members can:</p>
-                <div class="list-group">
-                    <span class="list-item">LAUNCH PROJECTS FROM ZERO</span>
-                    <span class="list-item">ASSEMBLE TEAMS INSTANTLY</span>
-                    <span class="list-item">TEST IDEAS ON ACTIVE AUDIENCES</span>
-                    <span class="list-item">ATTRACT INTERNAL INVESTMENTS</span>
+            <section class="section">
+                <span class="section-label">[ 02 // ANALYSIS ]</span>
+                <div class="card">
+                    <span class="card-jp">欠陥 // THE_PROBLEM</span>
+                    <h2>Founding in Isolation</h2>
+                    <p>Most founders start alone, facing a critical deficit of:</p>
+                    <div class="list-group">
+                        <span class="list-item">INITIAL AUDIENCE ACCESS</span>
+                        <span class="list-item">VETTED TEAM MEMBERS</span>
+                        <span class="list-item">HIGH-SIGNAL FEEDBACK</span>
+                        <span class="list-item">EARLY-STAGE CAPITAL</span>
+                        <span class="list-item">FOCUSED ENVIRONMENT</span>
+                    </div>
+                    <p>Public communities create noise. Open platforms dilute focus. Finding reliable partners takes months. Impulse is lost before the product even breathes.</p>
                 </div>
-                <p>Projects do not start in a vacuum. They ignite within a living environment.</p>
-            </div>
-        </section>
+            </section>
 
-        <section class="section">
-            <span class="section-label">[ 04 // MECHANICS ]</span>
-            <div class="card">
-                <span class="card-jp">仕組み // UTILITY_GATE</span>
-                <h2>NFT Access Protocol</h2>
-                <p>Entry is strictly governed by NFT ownership. The token functions as a multi-utility key:</p>
-                <div class="list-group">
-                    <span class="list-item">SYSTEM ENTRY PERMIT</span>
-                    <span class="list-item">INTERNAL LAUNCHPAD PARTICIPATION</span>
-                    <span class="list-item">INVESTMENT OPPORTUNITY ACCESS</span>
-                    <span class="list-item">RIGHT TO BUILD WITHIN THE ECOSYSTEM</span>
+            <section class="section">
+                <span class="section-label">[ 03 // INFRASTRUCTURE ]</span>
+                <div class="card">
+                    <span class="card-jp">解決 // THE_SOLUTION</span>
+                    <h2>Private Forge for Creators</h2>
+                    <p>The Club acts as a private utility layer. Inside the ecosystem, members can:</p>
+                    <div class="list-group">
+                        <span class="list-item">LAUNCH PROJECTS FROM ZERO</span>
+                        <span class="list-item">ASSEMBLE TEAMS INSTANTLY</span>
+                        <span class="list-item">TEST IDEAS ON ACTIVE AUDIENCES</span>
+                        <span class="list-item">ATTRACT INTERNAL INVESTMENTS</span>
+                    </div>
+                    <p>Projects do not start in a vacuum. They ignite within a living environment.</p>
                 </div>
-                <p>No NFT — No Access. This ensures quality control and extreme signal-to-noise ratio.</p>
-            </div>
-        </section>
+            </section>
 
-        <section class="section">
-            <span class="section-label">[ 05 // SEGMENT ]</span>
-            <div class="card">
-                <span class="card-jp">対象 // INTENDED_FOR</span>
-                <h2>Builders Only</h2>
-                <p>Founders. Developers. Designers. Strategists. Early-stage Investors.</p>
-                <p class="accent-text">THIS IS NOT FOR OBSERVERS.</p>
-                <p>Not for passive presence. This is a space for those who intend to create.</p>
-            </div>
-        </section>
-
-        <section class="section">
-            <span class="section-label">[ 06 // EDGE ]</span>
-            <div class="card">
-                <span class="card-jp">優位性 // STRATEGIC_ADVANTAGE</span>
-                <h2>Unfair Advantage</h2>
-                <p>Launching within a closed circuit provides:</p>
-                <div class="list-group">
-                    <span class="list-item">INSTANT NETWORK EFFECT</span>
-                    <span class="list-item">RAPID TEAM FORMATION</span>
-                    <span class="list-item">EARLY VALIDATION</span>
-                    <span class="list-item">SEED CAPITAL ACCESS</span>
+            <section class="section">
+                <span class="section-label">[ 04 // MECHANICS ]</span>
+                <div class="card">
+                    <span class="card-jp">仕組み // UTILITY_GATE</span>
+                    <h2>NFT Access Protocol</h2>
+                    <p>Entry is strictly governed by NFT ownership. The token functions as a multi-utility key:</p>
+                    <div class="list-group">
+                        <span class="list-item">SYSTEM ENTRY PERMIT</span>
+                        <span class="list-item">INTERNAL LAUNCHPAD PARTICIPATION</span>
+                        <span class="list-item">INVESTMENT OPPORTUNITY ACCESS</span>
+                        <span class="list-item">RIGHT TO BUILD WITHIN THE ECOSYSTEM</span>
+                    </div>
+                    <p>No NFT — No Access. This ensures quality control and extreme signal-to-noise ratio.</p>
                 </div>
-                <p>The ecosystem reduces friction at the most fragile stage — the beginning.</p>
-            </div>
-        </section>
+            </section>
 
-        <section class="section">
-            <span class="section-label">[ 07 // VISION ]</span>
-            <div class="card">
-                <span class="card-jp">展望 // LONG_TERM_VISION</span>
-                <h2>Self-Sustaining Network</h2>
-                <p>Our goal is an autonomous circle where projects are born, talents circulate, and capital fuels internal growth.</p>
-                <p>A closed, structured, high-signal environment where reputation accumulates over time.</p>
-            </div>
-        </section>
+            <section class="section">
+                <span class="section-label">[ 05 // SEGMENT ]</span>
+                <div class="card">
+                    <span class="card-jp">対象 // INTENDED_FOR</span>
+                    <h2>Builders Only</h2>
+                    <p>Founders. Developers. Designers. Strategists. Early-stage Investors.</p>
+                    <p class="accent-text">THIS IS NOT FOR OBSERVERS.</p>
+                    <p>Not for passive presence. This is a space for those who intend to create.</p>
+                </div>
+            </section>
 
-        <footer>
-            TERMINAL // DRAGON TYCOON CLUB // 2026
-        </footer>
+            <section class="section">
+                <span class="section-label">[ 06 // EDGE ]</span>
+                <div class="card">
+                    <span class="card-jp">優位性 // STRATEGIC_ADVANTAGE</span>
+                    <h2>Unfair Advantage</h2>
+                    <p>Launching within a closed circuit provides:</p>
+                    <div class="list-group">
+                        <span class="list-item">INSTANT NETWORK EFFECT</span>
+                        <span class="list-item">RAPID TEAM FORMATION</span>
+                        <span class="list-item">EARLY VALIDATION</span>
+                        <span class="list-item">SEED CAPITAL ACCESS</span>
+                    </div>
+                    <p>The ecosystem reduces friction at the most fragile stage — the beginning.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <span class="section-label">[ 07 // VISION ]</span>
+                <div class="card">
+                    <span class="card-jp">展望 // LONG_TERM_VISION</span>
+                    <h2>Self-Sustaining Network</h2>
+                    <p>Our goal is an autonomous circle where projects are born, talents circulate, and capital fuels internal growth.</p>
+                    <p>A closed, structured, high-signal environment where reputation accumulates over time.</p>
+                </div>
+            </section>
+
+            <footer>
+                TERMINAL // DRAGON TYCOON CLUB // 2026
+            </footer>
+        </div>
 
         <div class="ticker-wrap">
             <div class="ticker">
