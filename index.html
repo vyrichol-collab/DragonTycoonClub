@@ -14,14 +14,15 @@
             --border: #1a1a1a;
             --glitch-1: #ff00c1;
             --glitch-2: #00fff0;
-            --grid-color: rgba(138, 43, 226, 0.15);
+            --grid-color: rgba(138, 43, 226, 0.12);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             background-color: var(--bg);
-            background-image: radial-gradient(circle at 50% 30%, #1a0b2e 0%, #000000 70%);
+            /* Глубокий фиолетовый градиент в центре */
+            background-image: radial-gradient(circle at 50% 40%, #150826 0%, #000000 80%);
             background-attachment: fixed;
             color: var(--text-main);
             font-family: 'Space Mono', monospace;
@@ -31,7 +32,8 @@
             min-height: 100vh;
         }
 
-        .grid-background {
+        /* Контейнер для сетки */
+        .grid-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -42,34 +44,34 @@
             overflow: hidden;
         }
 
-        .grid-layer {
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-        }
-
+        /* Вертикальные линии - движутся вправо */
         .grid-v {
+            position: absolute;
+            width: 200%;
+            height: 100%;
             background-image: linear-gradient(to right, var(--grid-color) 1px, transparent 1px);
-            background-size: 80px 100%;
-            animation: move-v 20s linear infinite;
+            background-size: 60px 100%;
+            animation: move-v 14s linear infinite;
         }
 
+        /* Горизонтальные линии - движутся вверх */
         .grid-h {
+            position: absolute;
+            width: 100%;
+            height: 200%;
             background-image: linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-            background-size: 100% 80px;
-            animation: move-h 25s linear infinite reverse;
+            background-size: 100% 60px;
+            animation: move-h 11s linear infinite;
         }
 
         @keyframes move-v {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-80px); }
+            0% { transform: translateX(-60px); }
+            100% { transform: translateX(0); }
         }
 
         @keyframes move-h {
             0% { transform: translateY(0); }
-            100% { transform: translateY(-80px); }
+            100% { transform: translateY(-60px); }
         }
 
         .jp-bg-layer {
@@ -82,7 +84,7 @@
             padding: 5% 3%;
             font-family: 'Noto Sans JP', sans-serif;
             font-size: 7vh;
-            color: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.06);
             writing-mode: vertical-rl;
             text-transform: uppercase;
         }
@@ -104,7 +106,6 @@
             text-transform: uppercase;
             position: relative;
             display: inline-block;
-            z-index: 2;
         }
 
         .secret-link {
@@ -159,9 +160,7 @@
             display: block;
         }
 
-        .card {
-            padding: 10px 0; 
-        }
+        .card { padding: 10px 0; }
 
         .card-jp {
             font-family: 'Noto Sans JP', sans-serif;
@@ -216,14 +215,11 @@
             border-top: 1px solid var(--border);
             padding: 25px 0;
             margin-top: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
         }
 
-        .ticker {
-            display: flex;
-            white-space: nowrap;
-        }
+        .ticker { display: flex; white-space: nowrap; }
 
         .ticker-item {
             display: inline-block;
@@ -244,9 +240,9 @@
 </head>
 <body>
 
-    <div class="grid-background">
-        <div class="grid-layer grid-v"></div>
-        <div class="grid-layer grid-h"></div>
+    <div class="grid-container">
+        <div class="grid-v"></div>
+        <div class="grid-h"></div>
     </div>
 
     <div class="jp-bg-layer">
