@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DRAGON TYCOON CLUB // OFFICIAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -17,51 +17,42 @@
             --grid-color: rgba(138, 43, 226, 0.12);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body {
             background-color: var(--bg);
-            /* Глубокий фиолетовый градиент в центре */
-            background-image: radial-gradient(circle at 50% 40%, #150826 0%, #000000 80%);
+            background-image: radial-gradient(circle at 50% 40%, #150826 0%, #000000 85%);
             background-attachment: fixed;
             color: var(--text-main);
             font-family: 'Space Mono', monospace;
             line-height: 1.5;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Контейнер для сетки */
+        /* Анимированная сетка */
         .grid-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2;
             pointer-events: none;
-            overflow: hidden;
         }
 
-        /* Вертикальные линии - движутся вправо */
+        .grid-v, .grid-h { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; }
+
         .grid-v {
-            position: absolute;
-            width: 200%;
-            height: 100%;
             background-image: linear-gradient(to right, var(--grid-color) 1px, transparent 1px);
             background-size: 60px 100%;
-            animation: move-v 14s linear infinite;
+            animation: move-v 17s linear infinite;
         }
 
-        /* Горизонтальные линии - движутся вверх */
         .grid-h {
-            position: absolute;
-            width: 100%;
-            height: 200%;
             background-image: linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
             background-size: 100% 60px;
-            animation: move-h 11s linear infinite;
+            animation: move-h 13s linear infinite;
         }
 
         @keyframes move-v {
@@ -84,158 +75,89 @@
             padding: 5% 3%;
             font-family: 'Noto Sans JP', sans-serif;
             font-size: 7vh;
-            color: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.05);
             writing-mode: vertical-rl;
-            text-transform: uppercase;
         }
 
         .container { 
             max-width: 800px; 
             width: 100%;
-            padding: 60px 25px 0; 
+            padding: 60px 25px 120px; /* Отступ снизу для тикера */
             text-align: center;
             position: relative;
             z-index: 1;
         }
 
-        .header-wrapper { margin-bottom: 50px; }
-        
         .title {
             font-size: 1.6rem;
             letter-spacing: 5px;
             text-transform: uppercase;
             position: relative;
             display: inline-block;
+            margin-bottom: 50px;
         }
 
-        .secret-link {
-            color: inherit;
-            text-decoration: none;
-            cursor: default;
-        }
+        .secret-link { color: inherit; text-decoration: none; cursor: default; }
 
         .title::before, .title::after {
             content: "DRAGON TYCOON CLUB";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: transparent;
             pointer-events: none;
         }
 
-        .title::before {
-            left: 2px;
-            text-shadow: -2px 0 var(--glitch-1);
-            clip: rect(44px, 999px, 56px, 0);
-            animation: glitch-anim 3s infinite linear alternate-reverse;
-        }
-
-        .title::after {
-            left: -2px;
-            text-shadow: -2px 0 var(--glitch-2);
-            clip: rect(10px, 999px, 25px, 0);
-            animation: glitch-anim 2s infinite linear alternate-reverse;
-        }
+        .title::before { left: 2px; text-shadow: -2px 0 var(--glitch-1); clip: rect(44px, 999px, 56px, 0); animation: glitch-anim 3s infinite linear alternate-reverse; }
+        .title::after { left: -2px; text-shadow: -2px 0 var(--glitch-2); clip: rect(10px, 999px, 25px, 0); animation: glitch-anim 2s infinite linear alternate-reverse; }
 
         @keyframes glitch-anim {
             0% { clip: rect(15px, 999px, 20px, 0); }
-            20% { clip: rect(40px, 999px, 45px, 0); }
-            40% { clip: rect(10px, 999px, 60px, 0); }
-            60% { clip: rect(50px, 999px, 55px, 0); }
-            80% { clip: rect(5px, 999px, 35px, 0); }
             100% { clip: rect(25px, 999px, 30px, 0); }
         }
 
-        .section { 
-            margin-bottom: 50px; 
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 50px;
-        } 
-
-        .section-label {
-            font-size: 9px;
-            color: var(--text-desc);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .card { padding: 10px 0; }
-
-        .card-jp {
-            font-family: 'Noto Sans JP', sans-serif;
-            font-size: 11px;
-            color: var(--text-dim);
-            letter-spacing: 2px;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        h2 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            font-weight: 400;
-            text-transform: uppercase;
-        }
-
-        p {
-            font-size: 13px;
-            color: var(--text-dim);
-            max-width: 600px;
-            margin: 0 auto 15px;
-        }
-
-        .accent-text {
-            color: var(--text-main);
-            font-weight: bold;
-            display: block;
-            margin: 10px 0;
-        }
-
-        .list-group { margin: 15px 0; }
-        .list-item {
-            font-size: 12px;
-            color: var(--text-desc);
-            margin-bottom: 6px;
-            display: block;
-        }
+        .section { margin-bottom: 50px; border-bottom: 1px solid var(--border); padding-bottom: 50px; } 
+        .section-label { font-size: 9px; color: var(--text-desc); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 15px; display: block; }
+        .card-jp { font-family: 'Noto Sans JP', sans-serif; font-size: 11px; color: var(--text-desc); letter-spacing: 2px; margin-bottom: 12px; display: block; }
+        h2 { font-size: 1.2rem; margin-bottom: 20px; font-weight: 400; text-transform: uppercase; }
+        p { font-size: 13px; color: var(--text-dim); max-width: 600px; margin: 0 auto 15px; }
+        .accent-text { color: var(--text-main); font-weight: bold; display: block; margin: 10px 0; }
+        .list-item { font-size: 12px; color: var(--text-desc); margin-bottom: 6px; display: block; }
         .list-item::before { content: "/ "; }
 
-        footer {
-            margin-top: 40px;
-            font-size: 9px;
-            color: #ffffff;
-            letter-spacing: 6px;
-            padding-bottom: 30px;
-        }
+        footer { font-size: 9px; color: #ffffff; letter-spacing: 6px; padding-bottom: 30px; }
 
-        .ticker-wrap {
+        /* Глобальный тикер на весь экран */
+        .ticker-fixed {
+            position: fixed;
+            bottom: 0;
+            left: 0;
             width: 100%;
-            overflow: hidden;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
             border-top: 1px solid var(--border);
-            padding: 25px 0;
-            margin-top: 20px;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
+            padding: 20px 0;
+            z-index: 100;
+            overflow: hidden;
+            white-space: nowrap;
         }
 
-        .ticker { display: flex; white-space: nowrap; }
-
-        .ticker-item {
+        .ticker-content {
             display: inline-block;
-            padding-right: 50px;
+            animation: ticker-move 30s linear infinite;
+        }
+
+        .ticker-text {
+            display: inline-block;
             font-size: 10px;
             color: var(--text-dim);
-            letter-spacing: 5px;
+            letter-spacing: 8px;
             text-transform: uppercase;
-            animation: ticker-move 20s linear infinite;
+            padding-right: 50px;
         }
 
         @keyframes ticker-move {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
+            100% { transform: translateX(-50%); }
         }
-
     </style>
 </head>
 <body>
@@ -251,7 +173,7 @@
     </div>
 
     <div class="container">
-        <header class="header-wrapper">
+        <header>
             <h1 class="title">
                 <a href="quest.html" class="secret-link">DRAGON</a> TYCOON CLUB
             </h1>
@@ -264,7 +186,6 @@
                 <h2>Private Network for Builders</h2>
                 <p>A closed-loop ecosystem designed for launching and scaling projects within a unified infrastructure.</p>
                 <p>Not a public chat. Not an open community. A controlled environment where execution outweighs discussion.</p>
-                <p>The philosophy is simple: most early-stage projects fail not from a lack of ideas, but from a lack of structure, support, and the right circle. We exist to bridge that gap.</p>
             </div>
         </section>
 
@@ -273,15 +194,12 @@
             <div class="card">
                 <span class="card-jp">欠陥 // THE_PROBLEM</span>
                 <h2>Founding in Isolation</h2>
-                <p>Most founders start alone, facing a critical deficit of:</p>
-                <div class="list-group">
+                <div style="margin: 15px 0;">
                     <span class="list-item">INITIAL AUDIENCE ACCESS</span>
                     <span class="list-item">VETTED TEAM MEMBERS</span>
                     <span class="list-item">HIGH-SIGNAL FEEDBACK</span>
-                    <span class="list-item">EARLY-STAGE CAPITAL</span>
-                    <span class="list-item">FOCUSED ENVIRONMENT</span>
                 </div>
-                <p>Public communities create noise. Open platforms dilute focus. Finding reliable partners takes months. Impulse is lost before the product even breathes.</p>
+                <p>Public communities create noise. Open platforms dilute focus. Finding reliable partners takes months.</p>
             </div>
         </section>
 
@@ -290,14 +208,7 @@
             <div class="card">
                 <span class="card-jp">解決 // THE_SOLUTION</span>
                 <h2>Private Forge for Creators</h2>
-                <p>The Club acts as a private utility layer. Inside the ecosystem, members can:</p>
-                <div class="list-group">
-                    <span class="list-item">LAUNCH PROJECTS FROM ZERO</span>
-                    <span class="list-item">ASSEMBLE TEAMS INSTANTLY</span>
-                    <span class="list-item">TEST IDEAS ON ACTIVE AUDIENCES</span>
-                    <span class="list-item">ATTRACT INTERNAL INVESTMENTS</span>
-                </div>
-                <p>Projects do not start in a vacuum. They ignite within a living environment.</p>
+                <p>The Club acts as a private utility layer. Projects do not start in a vacuum. They ignite within a living environment.</p>
             </div>
         </section>
 
@@ -306,14 +217,7 @@
             <div class="card">
                 <span class="card-jp">仕組み // UTILITY_GATE</span>
                 <h2>NFT Access Protocol</h2>
-                <p>Entry is strictly governed by NFT ownership. The token functions as a multi-utility key:</p>
-                <div class="list-group">
-                    <span class="list-item">SYSTEM ENTRY PERMIT</span>
-                    <span class="list-item">INTERNAL LAUNCHPAD PARTICIPATION</span>
-                    <span class="list-item">INVESTMENT OPPORTUNITY ACCESS</span>
-                    <span class="list-item">RIGHT TO BUILD WITHIN THE ECOSYSTEM</span>
-                </div>
-                <p>No NFT — No Access. This ensures quality control and extreme signal-to-noise ratio.</p>
+                <p>Entry is strictly governed by NFT ownership. The token functions as a multi-utility key for the ecosystem.</p>
             </div>
         </section>
 
@@ -322,48 +226,24 @@
             <div class="card">
                 <span class="card-jp">対象 // INTENDED_FOR</span>
                 <h2>Builders Only</h2>
-                <p>Founders. Developers. Designers. Strategists. Early-stage Investors.</p>
                 <p class="accent-text">THIS IS NOT FOR OBSERVERS.</p>
-                <p>Not for passive presence. This is a space for those who intend to create.</p>
-            </div>
-        </section>
-
-        <section class="section">
-            <span class="section-label">[ 06 // EDGE ]</span>
-            <div class="card">
-                <span class="card-jp">優位性 // STRATEGIC_ADVANTAGE</span>
-                <h2>Unfair Advantage</h2>
-                <p>Launching within a closed circuit provides:</p>
-                <div class="list-group">
-                    <span class="list-item">INSTANT NETWORK EFFECT</span>
-                    <span class="list-item">RAPID TEAM FORMATION</span>
-                    <span class="list-item">EARLY VALIDATION</span>
-                    <span class="list-item">SEED CAPITAL ACCESS</span>
-                </div>
-                <p>The ecosystem reduces friction at the most fragile stage — the beginning.</p>
-            </div>
-        </section>
-
-        <section class="section">
-            <span class="section-label">[ 07 // VISION ]</span>
-            <div class="card">
-                <span class="card-jp">展望 // LONG_TERM_VISION</span>
-                <h2>Self-Sustaining Network</h2>
-                <p>Our goal is an autonomous circle where projects are born, talents circulate, and capital fuels internal growth.</p>
-                <p>A closed, structured, high-signal environment where reputation accumulates over time.</p>
+                <p>Founders. Developers. Designers. Strategists. Early-stage Investors.</p>
             </div>
         </section>
 
         <footer>
-            TERMINAL // DRAGON TYCOON CLUB // 2026
+            TERMINAL // DTC // 2026
         </footer>
+    </div>
 
-        <div class="ticker-wrap">
-            <div class="ticker">
-                <div class="ticker-item">FOLLOW THE DRAGON // FOLLOW THE DRAGON // FOLLOW THE DRAGON // FOLLOW THE DRAGON // </div>
-                <div class="ticker-item">FOLLOW THE DRAGON // FOLLOW THE DRAGON // FOLLOW THE DRAGON // FOLLOW THE DRAGON // </div>
-            </div>
+    <div class="ticker-fixed">
+        <div class="ticker-content">
+            <span class="ticker-text">FOLLOW THE DRAGON // FOLLOW THE DRAGON // FOLLOW THE DRAGON // FOLLOW THE DRAGON // </span>
+            <span class="ticker-text">FOLLOW THE DRAGON // FOLLOW THE DRAGON // FOLLOW THE DRAGON // FOLLOW THE DRAGON // </span>
+            <span class="ticker-text">FOLLOW THE DRAGON // FOLLOW THE DRAGON // FOLLOW THE DRAGON // FOLLOW THE DRAGON // </span>
+            <span class="ticker-text">FOLLOW THE DRAGON // FOLLOW THE DRAGON // FOLLOW THE DRAGON // FOLLOW THE DRAGON // </span>
         </div>
     </div>
+
 </body>
 </html>
