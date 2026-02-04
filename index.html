@@ -9,8 +9,8 @@
         :root {
             --bg: #000000;
             --text-main: #ffffff;
-            --text-dim: #bbbbbb;
-            --text-desc: #888888;
+            --text-dim: #555555;
+            --text-desc: #bbbbbb;
             --border: #1a1a1a;
             --glitch-1: #ff00c1;
             --glitch-2: #00fff0;
@@ -21,7 +21,7 @@
         
         body {
             background-color: var(--bg);
-            background-image: radial-gradient(circle at 50% 30%, #1a0b2e 0%, #000000 70%);
+            background-image: radial-gradient(circle at 50% 40%, #150826 0%, #000000 80%);
             background-attachment: fixed;
             color: var(--text-main);
             font-family: 'Space Mono', monospace;
@@ -32,7 +32,7 @@
             overflow-x: hidden;
         }
 
-        .grid-background {
+        .grid-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -43,29 +43,29 @@
             overflow: hidden;
         }
 
-        .grid-layer {
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-        }
-
         .grid-v {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            left: -50%;
             background-image: linear-gradient(to right, var(--grid-color) 1px, transparent 1px);
             background-size: 80px 100%;
-            animation: move-v 20s linear infinite;
+            animation: move-v 16s linear infinite;
         }
 
         .grid-h {
+            position: absolute;
+            width: 100%;
+            height: 200%;
+            top: -50%;
             background-image: linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
             background-size: 100% 80px;
-            animation: move-h 25s linear infinite reverse;
+            animation: move-h 11s linear infinite;
         }
 
         @keyframes move-v {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-80px); }
+            100% { transform: translateX(80px); }
         }
 
         @keyframes move-h {
@@ -91,14 +91,10 @@
         .container { 
             max-width: 800px; 
             width: 100%;
-            padding: 60px 0 0; 
+            padding: 60px 25px 0; 
             text-align: center;
             position: relative;
             z-index: 1;
-        }
-
-        .content-padding {
-            padding: 0 25px;
         }
 
         .header-wrapper { margin-bottom: 50px; }
@@ -157,7 +153,7 @@
 
         .section-label {
             font-size: 9px;
-            color: var(--text-desc);
+            color: var(--text-dim);
             text-transform: uppercase;
             letter-spacing: 3px;
             margin-bottom: 15px;
@@ -186,7 +182,7 @@
 
         p {
             font-size: 13px;
-            color: var(--text-dim);
+            color: var(--text-desc);
             max-width: 600px;
             margin: 0 auto 15px;
         }
@@ -201,7 +197,7 @@
         .list-group { margin: 15px 0; }
         .list-item {
             font-size: 12px;
-            color: var(--text-desc);
+            color: var(--text-dim);
             margin-bottom: 6px;
             display: block;
         }
@@ -225,6 +221,7 @@
             overflow: hidden;
             border-top: 1px solid var(--border);
             padding: 25px 0;
+            margin-top: 20px;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
         }
@@ -253,9 +250,9 @@
 </head>
 <body>
 
-    <div class="grid-background">
-        <div class="grid-layer grid-v"></div>
-        <div class="grid-layer grid-h"></div>
+    <div class="grid-container">
+        <div class="grid-v"></div>
+        <div class="grid-h"></div>
     </div>
 
     <div class="jp-bg-layer">
@@ -264,114 +261,112 @@
     </div>
 
     <div class="container">
-        <div class="content-padding">
-            <header class="header-wrapper">
-                <h1 class="title">
-                    <a href="quest.html" class="secret-link">DRAGON</a> TYCOON CLUB
-                </h1>
-            </header>
+        <header class="header-wrapper">
+            <h1 class="title">
+                <a href="quest.html" class="secret-link">DRAGON</a> TYCOON CLUB
+            </h1>
+        </header>
 
-            <section class="section">
-                <span class="section-label">[ 01 // OVERVIEW ]</span>
-                <div class="card">
-                    <span class="card-jp">核心 // PROJECT_CORE</span>
-                    <h2>Private Network for Builders</h2>
-                    <p>A closed-loop ecosystem designed for launching and scaling projects within a unified infrastructure.</p>
-                    <p>Not a public chat. Not an open community. A controlled environment where execution outweighs discussion.</p>
-                    <p>The philosophy is simple: most early-stage projects fail not from a lack of ideas, but from a lack of structure, support, and the right circle. We exist to bridge that gap.</p>
+        <section class="section">
+            <span class="section-label">[ 01 // OVERVIEW ]</span>
+            <div class="card">
+                <span class="card-jp">核心 // PROJECT_CORE</span>
+                <h2>Private Network for Builders</h2>
+                <p>A closed-loop ecosystem designed for launching and scaling projects within a unified infrastructure.</p>
+                <p>Not a public chat. Not an open community. A controlled environment where execution outweighs discussion.</p>
+                <p>The philosophy is simple: most early-stage projects fail not from a lack of ideas, but from a lack of structure, support, and the right circle. We exist to bridge that gap.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <span class="section-label">[ 02 // ANALYSIS ]</span>
+            <div class="card">
+                <span class="card-jp">欠陥 // THE_PROBLEM</span>
+                <h2>Founding in Isolation</h2>
+                <p>Most founders start alone, facing a critical deficit of:</p>
+                <div class="list-group">
+                    <span class="list-item">INITIAL AUDIENCE ACCESS</span>
+                    <span class="list-item">VETTED TEAM MEMBERS</span>
+                    <span class="list-item">HIGH-SIGNAL FEEDBACK</span>
+                    <span class="list-item">EARLY-STAGE CAPITAL</span>
+                    <span class="list-item">FOCUSED ENVIRONMENT</span>
                 </div>
-            </section>
+                <p>Public communities create noise. Open platforms dilute focus. Finding reliable partners takes months. Impulse is lost before the product even breathes.</p>
+            </div>
+        </section>
 
-            <section class="section">
-                <span class="section-label">[ 02 // ANALYSIS ]</span>
-                <div class="card">
-                    <span class="card-jp">欠陥 // THE_PROBLEM</span>
-                    <h2>Founding in Isolation</h2>
-                    <p>Most founders start alone, facing a critical deficit of:</p>
-                    <div class="list-group">
-                        <span class="list-item">INITIAL AUDIENCE ACCESS</span>
-                        <span class="list-item">VETTED TEAM MEMBERS</span>
-                        <span class="list-item">HIGH-SIGNAL FEEDBACK</span>
-                        <span class="list-item">EARLY-STAGE CAPITAL</span>
-                        <span class="list-item">FOCUSED ENVIRONMENT</span>
-                    </div>
-                    <p>Public communities create noise. Open platforms dilute focus. Finding reliable partners takes months. Impulse is lost before the product even breathes.</p>
+        <section class="section">
+            <span class="section-label">[ 03 // INFRASTRUCTURE ]</span>
+            <div class="card">
+                <span class="card-jp">解決 // THE_SOLUTION</span>
+                <h2>Private Forge for Creators</h2>
+                <p>The Club acts as a private utility layer. Inside the ecosystem, members can:</p>
+                <div class="list-group">
+                    <span class="list-item">LAUNCH PROJECTS FROM ZERO</span>
+                    <span class="list-item">ASSEMBLE TEAMS INSTANTLY</span>
+                    <span class="list-item">TEST IDEAS ON ACTIVE AUDIENCES</span>
+                    <span class="list-item">ATTRACT INTERNAL INVESTMENTS</span>
                 </div>
-            </section>
+                <p>Projects do not start in a vacuum. They ignite within a living environment.</p>
+            </div>
+        </section>
 
-            <section class="section">
-                <span class="section-label">[ 03 // INFRASTRUCTURE ]</span>
-                <div class="card">
-                    <span class="card-jp">解決 // THE_SOLUTION</span>
-                    <h2>Private Forge for Creators</h2>
-                    <p>The Club acts as a private utility layer. Inside the ecosystem, members can:</p>
-                    <div class="list-group">
-                        <span class="list-item">LAUNCH PROJECTS FROM ZERO</span>
-                        <span class="list-item">ASSEMBLE TEAMS INSTANTLY</span>
-                        <span class="list-item">TEST IDEAS ON ACTIVE AUDIENCES</span>
-                        <span class="list-item">ATTRACT INTERNAL INVESTMENTS</span>
-                    </div>
-                    <p>Projects do not start in a vacuum. They ignite within a living environment.</p>
+        <section class="section">
+            <span class="section-label">[ 04 // MECHANICS ]</span>
+            <div class="card">
+                <span class="card-jp">仕組み // UTILITY_GATE</span>
+                <h2>NFT Access Protocol</h2>
+                <p>Entry is strictly governed by NFT ownership. The token functions as a multi-utility key:</p>
+                <div class="list-group">
+                    <span class="list-item">SYSTEM ENTRY PERMIT</span>
+                    <span class="list-item">INTERNAL LAUNCHPAD PARTICIPATION</span>
+                    <span class="list-item">INVESTMENT OPPORTUNITY ACCESS</span>
+                    <span class="list-item">RIGHT TO BUILD WITHIN THE ECOSYSTEM</span>
                 </div>
-            </section>
+                <p>No NFT — No Access. This ensures quality control and extreme signal-to-noise ratio.</p>
+            </div>
+        </section>
 
-            <section class="section">
-                <span class="section-label">[ 04 // MECHANICS ]</span>
-                <div class="card">
-                    <span class="card-jp">仕組み // UTILITY_GATE</span>
-                    <h2>NFT Access Protocol</h2>
-                    <p>Entry is strictly governed by NFT ownership. The token functions as a multi-utility key:</p>
-                    <div class="list-group">
-                        <span class="list-item">SYSTEM ENTRY PERMIT</span>
-                        <span class="list-item">INTERNAL LAUNCHPAD PARTICIPATION</span>
-                        <span class="list-item">INVESTMENT OPPORTUNITY ACCESS</span>
-                        <span class="list-item">RIGHT TO BUILD WITHIN THE ECOSYSTEM</span>
-                    </div>
-                    <p>No NFT — No Access. This ensures quality control and extreme signal-to-noise ratio.</p>
+        <section class="section">
+            <span class="section-label">[ 05 // SEGMENT ]</span>
+            <div class="card">
+                <span class="card-jp">対象 // INTENDED_FOR</span>
+                <h2>Builders Only</h2>
+                <p>Founders. Developers. Designers. Strategists. Early-stage Investors.</p>
+                <p class="accent-text">THIS IS NOT FOR OBSERVERS.</p>
+                <p>Not for passive presence. This is a space for those who intend to create.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <span class="section-label">[ 06 // EDGE ]</span>
+            <div class="card">
+                <span class="card-jp">優位性 // STRATEGIC_ADVANTAGE</span>
+                <h2>Unfair Advantage</h2>
+                <p>Launching within a closed circuit provides:</p>
+                <div class="list-group">
+                    <span class="list-item">INSTANT NETWORK EFFECT</span>
+                    <span class="list-item">RAPID TEAM FORMATION</span>
+                    <span class="list-item">EARLY VALIDATION</span>
+                    <span class="list-item">SEED CAPITAL ACCESS</span>
                 </div>
-            </section>
+                <p>The ecosystem reduces friction at the most fragile stage — the beginning.</p>
+            </div>
+        </section>
 
-            <section class="section">
-                <span class="section-label">[ 05 // SEGMENT ]</span>
-                <div class="card">
-                    <span class="card-jp">対象 // INTENDED_FOR</span>
-                    <h2>Builders Only</h2>
-                    <p>Founders. Developers. Designers. Strategists. Early-stage Investors.</p>
-                    <p class="accent-text">THIS IS NOT FOR OBSERVERS.</p>
-                    <p>Not for passive presence. This is a space for those who intend to create.</p>
-                </div>
-            </section>
+        <section class="section">
+            <span class="section-label">[ 07 // VISION ]</span>
+            <div class="card">
+                <span class="card-jp">展望 // LONG_TERM_VISION</span>
+                <h2>Self-Sustaining Network</h2>
+                <p>Our goal is an autonomous circle where projects are born, talents circulate, and capital fuels internal growth.</p>
+                <p>A closed, structured, high-signal environment where reputation accumulates over time.</p>
+            </div>
+        </section>
 
-            <section class="section">
-                <span class="section-label">[ 06 // EDGE ]</span>
-                <div class="card">
-                    <span class="card-jp">優位性 // STRATEGIC_ADVANTAGE</span>
-                    <h2>Unfair Advantage</h2>
-                    <p>Launching within a closed circuit provides:</p>
-                    <div class="list-group">
-                        <span class="list-item">INSTANT NETWORK EFFECT</span>
-                        <span class="list-item">RAPID TEAM FORMATION</span>
-                        <span class="list-item">EARLY VALIDATION</span>
-                        <span class="list-item">SEED CAPITAL ACCESS</span>
-                    </div>
-                    <p>The ecosystem reduces friction at the most fragile stage — the beginning.</p>
-                </div>
-            </section>
-
-            <section class="section">
-                <span class="section-label">[ 07 // VISION ]</span>
-                <div class="card">
-                    <span class="card-jp">展望 // LONG_TERM_VISION</span>
-                    <h2>Self-Sustaining Network</h2>
-                    <p>Our goal is an autonomous circle where projects are born, talents circulate, and capital fuels internal growth.</p>
-                    <p>A closed, structured, high-signal environment where reputation accumulates over time.</p>
-                </div>
-            </section>
-
-            <footer>
-                TERMINAL // DRAGON TYCOON CLUB // 2026
-            </footer>
-        </div>
+        <footer>
+            TERMINAL // DRAGON TYCOON CLUB // 2026
+        </footer>
 
         <div class="ticker-wrap">
             <div class="ticker">
