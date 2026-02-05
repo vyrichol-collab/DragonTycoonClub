@@ -204,6 +204,28 @@
         }
         .list-item::before { content: "/ "; }
 
+        .mint-button {
+            margin-top: 25px;
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--text-dim);
+            padding: 14px 30px;
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 3px;
+            cursor: not-allowed;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .mint-button:hover {
+            opacity: 1;
+            border-color: var(--glitch-1);
+            color: var(--glitch-1);
+            box-shadow: 0 0 15px rgba(255, 0, 193, 0.15);
+        }
+
         footer {
             margin-top: 40px;
             font-size: 9px;
@@ -325,6 +347,7 @@
                     <span class="list-item">RIGHT TO BUILD WITHIN THE ECOSYSTEM</span>
                 </div>
                 <p>No NFT — No Access. This ensures quality control and extreme signal-to-noise ratio.</p>
+                <button class="mint-button">MINT NOT STARTED</button>
             </div>
         </section>
 
