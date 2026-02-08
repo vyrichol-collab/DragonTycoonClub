@@ -106,12 +106,8 @@
             position: relative;
             display: inline-block;
             z-index: 2;
-        }
-
-        .secret-link {
-            color: inherit;
-            text-decoration: none;
             cursor: default;
+            user-select: none;
         }
 
         .title::before, .title::after {
@@ -285,9 +281,7 @@
 
     <div class="container">
         <header class="header-wrapper">
-            <h1 class="title">
-                <a href="quest.html" class="secret-link">DRAGON</a> TYCOON CLUB
-            </h1>
+            <h1 class="title" id="mainTitle">DRAGON TYCOON CLUB</h1>
         </header>
 
         <section class="section">
@@ -347,7 +341,7 @@
                     <span class="list-item">RIGHT TO BUILD WITHIN THE ECOSYSTEM</span>
                 </div>
                 <p>No NFT — No Access. This ensures quality control and extreme signal-to-noise ratio.</p>
-                <button class="mint-button">MINT NFT</button>
+                <button class="mint-button">MINT NOT STARTED</button>
             </div>
         </section>
 
@@ -399,5 +393,12 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('mainTitle').addEventListener('click', function() {
+            const _0xd1a = "cXVlc3QuaHRtbA==";
+            window.location.href = atob(_0xd1a);
+        });
+    </script>
 </body>
 </html>
